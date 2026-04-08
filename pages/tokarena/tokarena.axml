@@ -11,7 +11,7 @@
     </view>
     <view class="header-right" style="background-color: {{ARENA.bgCard}}; border-color: {{ARENA.border}};">
       <text class="icon-shield" style="color: {{healthColor}};">🛡️</text>
-      <text class="health-text" style="color: {{healthColor}};">{{baseHealth}}/{{maxHealth}}</text>
+      <text class="health-text" style="color: {{healthColor}};">{{protectionLevel}} Prot</text>
     </view>
   </view>
 
@@ -29,49 +29,113 @@
         <view class="avatar-ring">
           <view class="ring-outer {{healthPct > 30 ? 'vio' : 'danger'}}" style="border-color: {{healthPct > 30 ? ARENA.accentVio : ARENA.danger}};"></view>
           <view class="tokayito-box" style="background-color: {{ARENA.bgCard}}; border-color: {{ARENA.accentVio}};">
-            <text class="tokayito-emoji">⚔️</text>
+            <text class="tokayito-emoji">🐢</text>
           </view>
         </view>
 
         <text class="status-msg" style="color: {{ARENA.textMuted}};">Tu fortaleza está aguantando.</text>
-        <view onTap="simularAtaque" class="debug-btn">
-          <text style="color: {{ARENA.danger}};">[Simular ataque]</text>
-        </view>
       </view>
 
       <!-- Action Buttons -->
       <view class="action-footer">
-        <view onTap="setView" data-view="catalogo" class="action-btn outline" style="background-color: {{ARENA.bgCard}}; border-color: {{ARENA.accentVio}};">
+        <view onTap="toggleInventory" class="action-btn outline" style="background-color: {{ARENA.bgCard}}; border-color: {{ARENA.accentVio}};">
           <text class="icon-btn" style="color: {{ARENA.accentVio}};">🔨</text>
           <text class="label-btn">Construir</text>
         </view>
-        <view onTap="setView" data-view="social" class="action-btn solid" style="background-color: {{ARENA.accentFire}};">
+        <view onTap="toggleExplorar" class="action-btn solid" style="background-color: {{ARENA.accentFire}};">
           <text class="icon-btn" style="color: #FFF;">⚔️</text>
           <text class="label-btn" style="color: #FFF;">Explorar</text>
         </view>
       </view>
     </view>
 
-    <!-- CATALOGO -->
-    <view a:if="{{view === 'catalogo'}}" class="view-catalogo animate-slide-up">
-      <view class="section-title">
-        <text class="icon-title">🔨</text>
-        <text class="title-text">Catálogo de Materiales</text>
+    <!-- EXPLORACION (BASE DE TOKAYOS) -->
+    <view a:if="{{view === 'explorar'}}" class="view-explorar animate-slide-up">
+      <view class="explorar-header">
+        <text class="title-text">Base de Tokayos</text>
+        <view class="search-box">
+          <input class="search-input" placeholder="Buscar usuarios o amigos..." onInput="onSearchInput" value="{{searchQuery}}" />
+        </view>
       </view>
-      <scroll-view scroll-y class="scroll-list">
-        <view a:for="{{CATALOGO}}" class="catalogo-item" style="background-color: {{item.darkColor}}; border-color: #5C3A1E;">
-          <view class="item-info">
-            <view class="item-color-box" style="background-color: {{item.color}};"></view>
-            <view class="item-text">
-              <text class="item-name">{{item.nombre}}</text>
-              <text class="item-stats">+{{item.defensa}} Def</text>
+
+      <scroll-view scroll-y class="user-list">
+        <view class="section-subtitle">Añadir Amigos / Cercanos</view>
+        <view a:for="{{mockUsers}}" class="user-card" style="background-color: {{ARENA.bgCard}}; border-color: {{ARENA.border}};">
+          <view class="user-info">
+            <view class="user-avatar-small">👤</view>
+            <view class="user-meta">
+              <text class="username">{{item.user}}</text>
+              <view class="protection-tag" style="color: {{ARENA.accentVio}};">
+                🛡️ Prot: {{item.protection}}
+              </view>
             </view>
           </view>
-          <view onTap="comprarBloque" data-defensa="{{item.defensa}}" class="buy-btn" style="background-color: #FF8C42; border-color: #FFD166;">
-            <text class="buy-label">{{item.precio}} pts</text>
+          <view class="user-actions">
+            <view class="btn-action donate" onTap="donarBloque" data-id="{{item.id}}">🎁 Donar</view>
+            <view class="btn-action attack" onTap="iniciarAtaque" data-id="{{item.id}}">⚔️ Atacar</view>
           </view>
         </view>
       </scroll-view>
+
+      <view class="close-footer" onTap="toggleExplorar">
+        <text>Cerrar Exploración</text>
+      </view>
+    </view>
+
+    <!-- ESCENA DE ATAQUE -->
+    <view a:if="{{view === 'atacar'}}" class="view-atacar animate-fade-in">
+      <view class="rival-info">
+        <text class="rival-name">Atacando a {{rival.user}}</text>
+        <view class="rival-stats">🛡️ {{rival.protection}}</view>
+      </view>
+
+      <view class="battle-arena">
+        <view class="enemy-fort">
+          <!-- Mocking blocks to "destroy" -->
+          <view a:for="{{[1,2,3,4,5,6]}}" class="enemy-block animate-wiggle" onTap="atacarCubo">
+            📦
+          </view>
+        </view>
+      </view>
+
+      <view class="attack-footer">
+        <text class="attack-hint">¡Toca los bloques para destruirlos!</text>
+        <view class="exit-btn" onTap="finalizarAtaque">Terminar Ataque</view>
+      </view>
+    </view>
+
+    <!-- INVENTORY OVERLAY (DRAWER) -->
+    <view a:if="{{showInventory}}" class="inventory-overlay">
+      <view class="overlay-backdrop" onTap="toggleInventory"></view>
+      <view class="inventory-drawer animate-slide-up">
+        <view class="drawer-header">
+          <view class="handle"></view>
+          <view class="header-content">
+            <text class="drawer-title">Mi Inventario</text>
+            <view class="close-btn" onTap="toggleInventory">
+              <text>×</text>
+            </view>
+          </view>
+        </view>
+
+        <scroll-view scroll-y class="inventory-scroll">
+          <view class="inventory-grid">
+            <view a:for="{{inventory}}" class="inventory-item" onTap="seleccionarBloque" data-id="{{item.id}}">
+              <view class="item-card">
+                <image src="{{item.img}}" class="item-img" mode="aspectFit" />
+                <text class="item-qty">x{{item.qty}}</text>
+                <view class="hardness-container">
+                  <view class="hardness-bar">
+                    <view class="hardness-fill" style="width: {{item.dureza}}%;"></view>
+                  </view>
+                  <text class="hardness-label">{{item.dureza}}</text>
+                </view>
+                <text class="item-name">{{item.nombre}}</text>
+              </view>
+            </view>
+          </view>
+        </scroll-view>
+      </view>
     </view>
 
     <!-- ESCAPE (Game Over) -->
