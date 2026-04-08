@@ -1,0 +1,92 @@
+<view class="page-container" style="background-color: {{ARENA.bgDeep}}; color: {{ARENA.textPri}};">
+  
+  <!-- HEADER -->
+  <view class="header">
+    <view class="header-left">
+      <view a:if="{{view !== 'base' && view !== 'escape'}}" onTap="setView" data-view="base" class="back-btn">
+        <text class="icon" style="color: {{ARENA.accentFire}};">←</text>
+      </view>
+      <text class="icon-swords" style="color: {{ARENA.accentFire}};">⚔️</text>
+      <text class="title">Tokarena</text>
+    </view>
+    <view class="header-right" style="background-color: {{ARENA.bgCard}}; border-color: {{ARENA.border}};">
+      <text class="icon-shield" style="color: {{healthColor}};">🛡️</text>
+      <text class="health-text" style="color: {{healthColor}};">{{baseHealth}}/{{maxHealth}}</text>
+    </view>
+  </view>
+
+  <view class="content">
+    
+    <!-- VISTA BASE -->
+    <view a:if="{{view === 'base'}}" class="view-base animate-fade-in">
+      <view class="center-area">
+        <!-- Health Bar -->
+        <view class="health-bar-bg" style="background-color: {{ARENA.bgCard}};">
+          <view class="health-bar-fill" style="width: {{healthPct}}%; background-color: {{healthColor}};"></view>
+        </view>
+
+        <!-- Ring & Tokayito -->
+        <view class="avatar-ring">
+          <view class="ring-outer {{healthPct > 30 ? 'vio' : 'danger'}}" style="border-color: {{healthPct > 30 ? ARENA.accentVio : ARENA.danger}};"></view>
+          <view class="tokayito-box" style="background-color: {{ARENA.bgCard}}; border-color: {{ARENA.accentVio}};">
+            <text class="tokayito-emoji">⚔️</text>
+          </view>
+        </view>
+
+        <text class="status-msg" style="color: {{ARENA.textMuted}};">Tu fortaleza está aguantando.</text>
+        <view onTap="simularAtaque" class="debug-btn">
+          <text style="color: {{ARENA.danger}};">[Simular ataque]</text>
+        </view>
+      </view>
+
+      <!-- Action Buttons -->
+      <view class="action-footer">
+        <view onTap="setView" data-view="catalogo" class="action-btn outline" style="background-color: {{ARENA.bgCard}}; border-color: {{ARENA.accentVio}};">
+          <text class="icon-btn" style="color: {{ARENA.accentVio}};">🔨</text>
+          <text class="label-btn">Construir</text>
+        </view>
+        <view onTap="setView" data-view="social" class="action-btn solid" style="background-color: {{ARENA.accentFire}};">
+          <text class="icon-btn" style="color: #FFF;">⚔️</text>
+          <text class="label-btn" style="color: #FFF;">Explorar</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- CATALOGO -->
+    <view a:if="{{view === 'catalogo'}}" class="view-catalogo animate-slide-up">
+      <view class="section-title">
+        <text class="icon-title">🔨</text>
+        <text class="title-text">Catálogo de Materiales</text>
+      </view>
+      <scroll-view scroll-y class="scroll-list">
+        <view a:for="{{CATALOGO}}" class="catalogo-item" style="background-color: {{item.darkColor}}; border-color: #5C3A1E;">
+          <view class="item-info">
+            <view class="item-color-box" style="background-color: {{item.color}};"></view>
+            <view class="item-text">
+              <text class="item-name">{{item.nombre}}</text>
+              <text class="item-stats">+{{item.defensa}} Def</text>
+            </view>
+          </view>
+          <view onTap="comprarBloque" data-defensa="{{item.defensa}}" class="buy-btn" style="background-color: #FF8C42; border-color: #FFD166;">
+            <text class="buy-label">{{item.precio}} pts</text>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- ESCAPE (Game Over) -->
+    <view a:if="{{view === 'escape'}}" class="view-escape animate-fade-in">
+      <view class="alert-icon-box animate-pulse">
+        <text class="icon-giant">⚠️</text>
+      </view>
+      <text class="escape-title">¡BASE DESTRUIDA!</text>
+      <text class="escape-subtitle">Tu Tokayito escapó por el agujero. ¡Atrápalo!</text>
+      
+      <view onTap="atraparTokayo" class="catch-btn animate-float" style="background-color: {{ARENA.accentVio}}; border-color: {{ARENA.textPri}};">
+        <text class="catch-emoji">🏃‍♂️</text>
+      </view>
+      <text class="catch-hint">¡Tócalo para atraparlo!</text>
+    </view>
+
+  </view>
+</view>

@@ -1,0 +1,45 @@
+{
+  "pages": [
+    "pages/splash/splash",
+    "pages/tikitoka/tikitoka",
+    "pages/tokarena/tokarena",
+    "pages/tokayito/tokayito",
+    "pages/tokatienda/tokatienda"
+  ],
+  "window": {
+    "defaultTitle": "TokaYa!",
+    "titleBarColor": "#59A5C6",
+    "backgroundColor": "#74D5FF"
+  },
+  "tabBar": {
+    "textColor": "#FFFFFF",
+    "selectedColor": "#0B6E56",
+    "backgroundColor": "#59A5C6",
+    "items": [
+      {
+        "pagePath": "pages/tikitoka/tikitoka",
+        "name": "Tiki Toka",
+        "icon": "/assets/icons/map.png",
+        "activeIcon": "/assets/icons/map_active.png"
+      },
+      {
+        "pagePath": "pages/tokarena/tokarena",
+        "name": "Tokarena",
+        "icon": "/assets/icons/swords.png",
+        "activeIcon": "/assets/icons/swords_active.png"
+      },
+      {
+        "pagePath": "pages/tokayito/tokayito",
+        "name": "Tokayito",
+        "icon": "/assets/icons/smile.png",
+        "activeIcon": "/assets/icons/smile_active.png"
+      },
+      {
+        "pagePath": "pages/tokatienda/tokatienda",
+        "name": "Tienda",
+        "icon": "/assets/icons/store.png",
+        "activeIcon": "/assets/icons/store_active.png"
+      }
+    ]
+  }
+}

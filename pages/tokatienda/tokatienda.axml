@@ -1,0 +1,103 @@
+<view class="page-container" style="background: linear-gradient(180deg, {{PALETTE.skyBlue}} 0%, {{PALETTE.lightGreen}} 100%)">
+  
+  <!-- HEADER -->
+  <view class="header">
+    <view class="header-center">
+      <text class="store-title" style="color: {{PALETTE.tealDark}};">Tokatienda</text>
+    </view>
+    <view class="points-bubble animate-fade-in" style="background-color: {{PALETTE.softYellow}}; border-color: {{PALETTE.tealDark}};">
+      <text class="points-icon">💰</text>
+      <text class="points-count" style="color: {{PALETTE.tealDark}};">{{userPoints}}</text>
+    </view>
+  </view>
+
+  <scroll-view scroll-y class="main-scroll">
+    
+    <!-- PREVIEW AREA -->
+    <view class="preview-section">
+      <view class="island-base animate-float" style="border-color: {{PALETTE.tealLight}};">
+        <view class="avatar-container">
+          <text class="avatar-mascot">🌱</text>
+          <!-- Dynamic Overlay Items -->
+          <text a:if="{{selectedHat}}" class="overlay-hat animate-pop-in">{{selectedHat}}</text>
+          <text a:if="{{selectedAcc}}" class="overlay-acc animate-pop-in">{{selectedAcc}}</text>
+        </view>
+      </view>
+      <text class="preview-hint" style="color: {{PALETTE.grassGreen}};">Probador Virtual</text>
+    </view>
+
+    <!-- CATEGORY TABS -->
+    <view class="tabs-container">
+      <view 
+        class="tab-item {{currentCategory === 'personalizar' ? 'active' : ''}}" 
+        onTap="switchCategory" data-cat="personalizar"
+        style="background-color: {{currentCategory === 'personalizar' ? PALETTE.tealDark : 'rgba(255,255,255,0.5)'}}; color: {{currentCategory === 'personalizar' ? '#FFF' : PALETTE.tealDark}};"
+      >Personalizar</view>
+      <view 
+        class="tab-item {{currentCategory === 'bloques' ? 'active' : ''}}" 
+        onTap="switchCategory" data-cat="bloques"
+        style="background-color: {{currentCategory === 'bloques' ? PALETTE.tealDark : 'rgba(255,255,255,0.5)'}}; color: {{currentCategory === 'bloques' ? '#FFF' : PALETTE.tealDark}};"
+      >Bloques</view>
+      <view 
+        class="tab-item {{currentCategory === 'ataque' ? 'active' : ''}}" 
+        onTap="switchCategory" data-cat="ataque"
+        style="background-color: {{currentCategory === 'ataque' ? PALETTE.tealDark : 'rgba(255,255,255,0.5)'}}; color: {{currentCategory === 'ataque' ? '#FFF' : PALETTE.tealDark}};"
+      >Ataque</view>
+      <view 
+        class="tab-item {{currentCategory === 'premios' ? 'active' : ''}}" 
+        onTap="switchCategory" data-cat="premios"
+        style="background-color: {{currentCategory === 'premios' ? PALETTE.tealDark : 'rgba(255,255,255,0.5)'}}; color: {{currentCategory === 'premios' ? '#FFF' : PALETTE.tealDark}};"
+      >Premios</view>
+    </view>
+
+    <!-- GRID -->
+    <view class="catalog-grid">
+      <view 
+        a:for="{{catalog[currentCategory]}}" 
+        class="item-card animate-pop-in" 
+        style="background-color: rgba(255,255,255,0.7); border-color: #FFF;"
+        onTap="onItemTap"
+        data-item="{{item}}"
+      >
+        <view class="item-visual-box">
+          <text class="item-emoji">{{item.emoji}}</text>
+          <view a:if="{{index % 3 === 0}}" class="new-tag" style="background-color: {{PALETTE.pink}};">NEW</view>
+        </view>
+        
+        <view class="item-details">
+          <text class="item-name" style="color: {{PALETTE.tealDark}};">{{item.name}}</text>
+          <text class="item-meta">{{item.stats || item.desc || 'Accesorio'}}</text>
+        </view>
+
+        <view class="item-footer">
+          <view a:if="{{inventory.indexOf(item.id) !== -1}}" class="owned-badge" style="background-color: {{PALETTE.tealLight}};">
+            <text style="color: {{PALETTE.tealDark}};">✓ Propio</text>
+          </view>
+          <view a:else class="price-btn" style="background-color: {{PALETTE.tealDark}};">
+            <text style="color: #FFF;">{{item.price}} pts</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="bottom-padding"></view>
+  </scroll-view>
+
+  <!-- CONFIRM MODAL -->
+  <view a:if="{{showConfirmModal}}" class="modal-overlay animate-fade-in">
+    <view class="modal-content animate-pop-in" style="background-color: #FFF; border-color: {{PALETTE.tealLight}};">
+      <text class="modal-title" style="color: {{PALETTE.tealDark}};">¿Confirmar Compra?</text>
+      <view class="modal-item-preview">
+        <text class="modal-emoji">{{pendingItem.emoji}}</text>
+        <text class="modal-name">{{pendingItem.name}}</text>
+      </view>
+      <text class="modal-price" style="color: {{PALETTE.pink}};">Total: {{pendingItem.price}} pts</text>
+      
+      <view class="modal-actions">
+        <view class="btn-cancel" onTap="cancelPurchase">Cancelar</view>
+        <view class="btn-confirm" style="background-color: {{PALETTE.tealDark}};" onTap="confirmPurchase">Comprar</view>
+      </view>
+    </view>
+  </view>
+
+</view>

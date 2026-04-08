@@ -1,0 +1,141 @@
+<view class="page-container" style="background: linear-gradient(180deg, {{PALETTE.skyBlue}} 0%, {{PALETTE.lightGreen}} 100%)">
+  
+  <!-- SPARKLES -->
+  <view class="sparkles-container">
+    <view 
+      a:for="{{sparkles}}" 
+      class="sparkle" 
+      style="top: {{item.top}}%; left: {{item.left}}%; background-color: {{item.color}}; box-shadow: 0 0 16rpx {{item.color}}; animation-delay: {{item.delay}}s; animation-duration: {{item.duration}}s;"
+    ></view>
+  </view>
+
+  <!-- HEADER -->
+  <view class="header">
+    <text class="page-title" style="color: {{PALETTE.tealDark}};">Tokasa</text>
+  </view>
+
+  <!-- MAIN AREA -->
+  <view class="main-content">
+    
+    <!-- Floating Island -->
+    <view class="island-container">
+      <view class="island-base animate-float" style="border-color: {{PALETTE.tealLight}};"></view>
+      
+      <view class="avatar-card animate-float-delayed" style="background-color: rgba(255,255,255,0.7); border-color: #FFFFFF;">
+        <text class="avatar-label" style="color: {{PALETTE.tealDark}};">[Avatar]</text>
+        <text class="avatar-emoji">🌱</text>
+
+        <!-- Trivia Button -->
+        <view class="trivia-btn animate-bounce" style="background-color: {{PALETTE.pink}}; border-color: #FFFFFF;" onTap="toggleTrivia">
+          <text class="icon-help">❓</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- STATS CARD -->
+    <view class="stats-card animate-slide-up" style="background-color: rgba(255,255,255,0.7); border-color: #FFFFFF;">
+      
+      <!-- Perfection Ring -->
+      <view class="perfection-ring-box">
+        <view class="aura animate-pulse" style="background: radial-gradient(circle, {{PALETTE.softYellow}} 0%, transparent 70%);"></view>
+        <view class="ring-content">
+          <text class="ring-value" style="color: {{PALETTE.tealDark}};">{{perfeccion}}</text>
+          <text class="ring-label" style="color: {{PALETTE.grassGreen}};">PERFECCION</text>
+        </view>
+        <!-- Circle placeholder since SVG circles are harder in AXML -->
+        <view class="ring-border" style="border-color: {{PALETTE.softYellow}};"></view>
+      </view>
+
+      <!-- Stats Bars -->
+      <view class="bars-container">
+        
+        <!-- Bondad -->
+        <view class="stat-item">
+          <view class="stat-header">
+            <text class="stat-label" style="color: {{PALETTE.tealDark}};">BONDAD</text>
+            <text class="stat-value" style="color: {{PALETTE.pink}};">{{stats.bondad}}%</text>
+          </view>
+          <view class="bar-bg">
+            <view class="bar-fill" style="width: {{stats.bondad}}%; background-color: {{PALETTE.pink}};"></view>
+          </view>
+        </view>
+
+        <!-- Intel -->
+        <view class="stat-item">
+          <view class="stat-header">
+            <text class="stat-label" style="color: {{PALETTE.tealDark}};">INTEL</text>
+            <text class="stat-value" style="color: {{PALETTE.tealLight}};">{{stats.inteligencia}}%</text>
+          </view>
+          <view class="bar-bg">
+            <view class="bar-fill" style="width: {{stats.inteligencia}}%; background-color: {{PALETTE.tealLight}};"></view>
+          </view>
+        </view>
+
+        <!-- Fuerza -->
+        <view class="stat-item">
+          <view class="stat-header">
+            <text class="stat-label" style="color: {{PALETTE.tealDark}};">FUERZA</text>
+            <text class="stat-value" style="color: {{PALETTE.grassGreen}};">{{stats.fuerza}}%</text>
+          </view>
+          <view class="bar-bg">
+            <view class="bar-fill" style="width: {{stats.fuerza}}%; background-color: {{PALETTE.grassGreen}};"></view>
+          </view>
+        </view>
+
+      </view>
+
+    </view>
+  </view>
+
+  <!-- TRIVIA MODAL -->
+  <view a:if="{{showTrivia}}" class="modal-overlay animate-fade-in">
+    <view class="modal-content animate-pop-in" style="background-color: #FFFFFF; border-color: {{PALETTE.tealLight}};">
+      
+      <view class="close-btn" onTap="toggleTrivia">
+        <text style="color: {{PALETTE.tealDark}};">✕</text>
+      </view>
+
+      <!-- START STEP -->
+      <view a:if="{{triviaStep === 'start'}}" class="trivia-start">
+        <view class="step-icon animate-wiggle">🧠</view>
+        <text class="step-title" style="color: {{PALETTE.tealDark}};">¡Trivia Natural! 🌿</text>
+        <text class="step-desc" style="color: {{PALETTE.grassGreen}};">Aprende sobre finanzas y sube la inteligencia de tu Tokasa.</text>
+        <view class="primary-btn" style="background-color: {{PALETTE.pink}};" onTap="startTrivia">
+          <text>¡Jugar! ➔</text>
+        </view>
+      </view>
+
+      <!-- PLAYING STEP -->
+      <view a:if="{{triviaStep === 'playing'}}" class="trivia-playing">
+        <text class="q-progress">Pregunta {{currentQIndex + 1}}/{{questions.length}}</text>
+        <text class="q-text" style="color: {{PALETTE.tealDark}};">{{questions[currentQIndex].pregunta}}</text>
+        <view class="options-list">
+          <view 
+            a:for="{{questions[currentQIndex].opciones}}" 
+            class="option-item" 
+            style="background-color: {{PALETTE.lightGreen}}; border-color: {{PALETTE.tealLight}}; color: {{PALETTE.tealDark}}"
+            onTap="handleRespuesta"
+            data-idx="{{index}}"
+          >
+            <text>{{item}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- RESULT STEP -->
+      <view a:if="{{triviaStep === 'result'}}" class="trivia-result">
+        <view class="step-icon animate-float">🏆</view>
+        <text class="step-title" style="color: {{PALETTE.tealDark}};">¡Ganaste! 🎉</text>
+        <text class="step-desc" style="color: {{PALETTE.grassGreen}};">Acertaste {{score}} de {{questions.length}}</text>
+        <view class="badge" style="background-color: {{PALETTE.skyBlue}}; border-color: {{PALETTE.tealDark}}; color: {{PALETTE.tealDark}};">
+          +18% Inteligencia
+        </view>
+        <view class="primary-btn" style="background-color: {{PALETTE.tealDark}};" onTap="toggleTrivia">
+          <text>¡Yey!</text>
+        </view>
+      </view>
+
+    </view>
+  </view>
+
+</view>

@@ -1,0 +1,22 @@
+# Alipay Mini Program / Tiny App temp files
+.tea/
+.ant-move/
+dist/
+*upload_info.json
+
+# Dependencies
+node_modules/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.bak

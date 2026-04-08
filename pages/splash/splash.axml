@@ -1,0 +1,9 @@
+<view class="container">
+  <view class="logo-wrapper">
+  <image src="/assets/icons/tokaya_v1.png" />
+    <view class="logo-box">
+      <text class="logo-text">TokaYa!</text>
+    </view>
+    <text class="sub-text">HACKATHON EDITION</text>
+  </view>
+</view>

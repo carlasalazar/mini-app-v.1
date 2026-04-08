@@ -1,0 +1,61 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #74D5FF;
+}
+
+.logo-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: logoFadeIn 0.8s ease-out forwards;
+}
+
+.logo-box {
+  padding: 0 48rpx;
+  height: 192rpx;
+  background-color: #FF6B9D;
+  border: 8rpx solid #FFFFFF;
+  border-radius: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 20rpx 60rpx rgba(0, 0, 0, 0.1);
+  margin-bottom: 32rpx;
+  animation: logoPulse 1.5s ease-in-out infinite;
+}
+
+.logo-text {
+  font-size: 72rpx;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -2rpx;
+}
+
+.sub-text {
+  color: #0B6E56;
+  font-weight: 900;
+  letter-spacing: 4rpx;
+  font-size: 28rpx;
+  opacity: 0;
+  animation: textFadeIn 0.5s ease-out 0.5s forwards;
+}
+
+@keyframes logoFadeIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes logoPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes textFadeIn {
+  from { opacity: 0; transform: translateY(20rpx); }
+  to { opacity: 1; transform: translateY(0); }
+}

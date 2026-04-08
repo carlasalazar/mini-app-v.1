@@ -1,0 +1,55 @@
+:root {
+  --sky-blue: #87CEEB;
+  --light-green: #D4E5D9;
+  --teal-dark: #0B6E56;
+  --teal-light: #7FCEBC;
+  --grass-green: #4A7C59;
+  --pink: #FF6B9D;
+  --soft-yellow: #FFE680;
+  --glass: rgba(255, 255, 255, 0.70);
+  --white: #FFFFFF;
+}
+
+page {
+  background: linear-gradient(180deg, #87CEEB 0%, #D4E5D9 100%);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #0B6E56;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+view, text {
+  box-sizing: border-box;
+}
+
+/* Common UI Utilities (replaces some Tailwind basics) */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.flex-1 { flex: 1; }
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+.relative { position: relative; }
+.absolute { position: absolute; }
+.overflow-hidden { overflow: hidden; }
+
+/* Animation Keyframes (to replace Framer Motion basics) */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(50rpx); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.4s ease-out forwards;
+}

@@ -1,0 +1,66 @@
+<view class="page-container">
+  <!-- HEADER -->
+  <view class="header">
+    <view class="header-left">
+      <view a:if="{{view === 'minijuego'}}" onTap="setViewMapa" class="back-btn">
+        <text class="icon">←</text>
+      </view>
+      <view a:else class="header-icon">
+        <text class="icon">🗺️</text>
+      </view>
+      <text class="title">{{view === 'mapa' ? 'Tiki Toka' : biomaActivo.nombre}}</text>
+    </view>
+  </view>
+
+  <view class="content">
+    <!-- MAPA -->
+    <view a:if="{{view === 'mapa'}}" class="map-view animate-fade-in">
+      <text class="subtitle">Selecciona un bioma para jugar y ganar puntos.</text>
+      
+      <view class="map-card">
+        <!-- Dots decorativos -->
+        <view 
+          a:for="{{dots}}" 
+          class="dot" 
+          style="top: {{item.top}}%; left: {{item.left}}%; animation-delay: {{item.delay}}s; animation-duration: {{item.duration}}s;"
+        ></view>
+
+      <view class="hex-grid">
+        <view 
+          a:for="{{biomas}}" 
+          class="hex-item hex-{{item.id}}" 
+          onTap="handleSeleccionarBioma" 
+          data-id="{{item.id}}"
+        >
+          <view class="hex-shape" style="background: linear-gradient(135deg, {{item.color}}88 0%, {{item.color}} 100%);">
+            <view class="hex-inner">
+              <text class="hex-emoji">{{item.emoji}}</text>
+              <text class="hex-label">{{item.nombre}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      </view>
+    </view>
+
+    <!-- MINIJUEGO -->
+    <view a:if="{{view === 'minijuego'}}" class="minijuego-view animate-fade-in" style="background-color: {{biomaActivo.bgDark}}">
+      <!-- Halo effect -->
+      <view class="halo" style="background: radial-gradient(circle at 50% 40%, {{biomaActivo.color}}40 0%, transparent 65%)"></view>
+
+      <view class="game-icon-box" style="background-color: {{biomaActivo.color}}22; border-color: {{biomaActivo.color}};">
+        <text class="icon-large" style="color: {{biomaActivo.color}};">🎮</text>
+      </view>
+
+      <view class="info-box">
+        <text class="bioma-title" style="color: {{biomaActivo.color}};">{{biomaActivo.nombre}}</text>
+        <text class="bioma-desc">{{biomaActivo.descripcion}}</text>
+        <text class="bioma-hint">(Simulador de minijuego en construcción)</text>
+      </view>
+
+      <button class="play-btn" style="background-color: {{biomaActivo.color}}22; border-color: {{biomaActivo.color}}; color: {{biomaActivo.color}};" onTap="setViewMapa">
+        Jugar y ganar puntos
+      </button>
+    </view>
+  </view>
+</view>
