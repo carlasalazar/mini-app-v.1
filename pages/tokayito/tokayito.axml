@@ -1,3 +1,7 @@
+<view class="custom-header">
+  <text class="header-texto">TOKAYITO</text>
+</view>
+
 <view class="page-container" style="background: linear-gradient(180deg, {{PALETTE.skyBlue}} 0%, {{PALETTE.lightGreen}} 100%)">
   
   <!-- SPARKLES -->
@@ -9,10 +13,6 @@
     ></view>
   </view>
 
-  <!-- HEADER -->
-  <view class="header">
-    <text class="page-title" style="color: {{PALETTE.tealDark}};">Tokasa</text>
-  </view>
 
   <!-- MAIN AREA -->
   <view class="main-content">
@@ -98,8 +98,8 @@
       <!-- START STEP -->
       <view a:if="{{triviaStep === 'start'}}" class="trivia-start">
         <view class="step-icon animate-wiggle">🧠</view>
-        <text class="step-title" style="color: {{PALETTE.tealDark}};">¡TOKA TRIVIA!</text>
-        <text class="step-desc" style="color: {{PALETTE.grassGreen}};">Aprende sobre finanzas y sube la inteligencia de tu Tokayito.</text>
+        <text class="step-title" style="color: {{PALETTE.tealDark}};">¡Trivia Natural! 🌿</text>
+        <text class="step-desc" style="color: {{PALETTE.grassGreen}};">Aprende sobre finanzas y sube la inteligencia de tu Tokasa.</text>
         <view class="primary-btn" style="background-color: {{PALETTE.pink}};" onTap="startTrivia">
           <text>¡Jugar! ➔</text>
         </view>
@@ -125,17 +125,42 @@
       <!-- RESULT STEP -->
       <view a:if="{{triviaStep === 'result'}}" class="trivia-result">
         <view class="step-icon animate-float">🏆</view>
-        <text class="step-title" style="color: {{PALETTE.tealDark}};">¡Ganaste!</text>
+        <text class="step-title" style="color: {{PALETTE.tealDark}};">¡Ganaste! 🎉</text>
         <text class="step-desc" style="color: {{PALETTE.grassGreen}};">Acertaste {{score}} de {{questions.length}}</text>
         <view class="badge" style="background-color: {{PALETTE.skyBlue}}; border-color: {{PALETTE.tealDark}}; color: {{PALETTE.tealDark}};">
           +18% Inteligencia
         </view>
         <view class="primary-btn" style="background-color: {{PALETTE.tealDark}};" onTap="toggleTrivia">
-          <text>Regresar</text>
+          <text>¡Yey!</text>
         </view>
       </view>
 
     </view>
   </view>
 
+</view>
+
+
+<view style="height: 100px; width: 100%;"></view>
+
+<view class="custom-tab-bar">
+  <view class="tab-item" onTap="goToTikitoka">
+    <image class="tab-icon" src="/assets/icons/tikitokaIcon.png" mode="aspectFit" />
+    <text class="tab-text">Tiki Toka</text>
+  </view>
+  
+  <view class="tab-item" onTap="goToTokarena">
+    <image class="tab-icon" src="/assets/icons/TokaArenaIcon.png" mode="aspectFit" />
+    <text class="tab-text">Tokarena</text>
+  </view>
+  
+  <view class="tab-item" onTap="goToTokayito">
+    <image class="tab-icon active" src="/assets/icons/tokayitoIcon.png" mode="aspectFit" />
+    <text class="tab-text active">Tokayito</text>
+  </view>
+  
+  <view class="tab-item" onTap="goToTienda">
+    <image class="tab-icon" src="/assets/icons/tiendaIcon.png" mode="aspectFit" />
+    <text class="tab-text">Tienda</text>
+  </view>
 </view>

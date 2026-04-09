@@ -1,16 +1,8 @@
+<view class="custom-header">
+  <text class="header-texto">TIKI TOKA</text>
+</view>
+
 <view class="page-container">
-  <!-- HEADER -->
-  <view class="header">
-    <view class="header-left">
-      <view a:if="{{view === 'minijuego'}}" onTap="setViewMapa" class="back-btn">
-        <text class="icon">←</text>
-      </view>
-      <view a:else class="header-icon">
-        <text class="icon">🗺️</text>
-      </view>
-      <text class="title">{{view === 'mapa' ? 'Tiki Toka' : biomaActivo.nombre}}</text>
-    </view>
-  </view>
 
   <view class="content">
     <!-- MAPA -->
@@ -62,5 +54,31 @@
         Jugar y ganar puntos
       </button>
     </view>
+  </view>
+</view>
+
+<view style="height: 100px; width: 100%;"></view>
+
+<view style="height: 100px; width: 100%;"></view>
+
+<view class="custom-tab-bar">
+  <view class="tab-item" onTap="goToTikitoka">
+    <image class="tab-icon active" src="/assets/icons/tikitokaIcon.png" mode="aspectFit" />
+    <text class="tab-text active">Tiki Toka</text>
+  </view>
+  
+  <view class="tab-item" onTap="goToTokarena">
+    <image class="tab-icon" src="/assets/icons/TokaArenaIcon.png" mode="aspectFit" />
+    <text class="tab-text">Tokarena</text>
+  </view>
+  
+  <view class="tab-item" onTap="goToTokayito">
+    <image class="tab-icon" src="/assets/icons/tokayitoIcon.png" mode="aspectFit" />
+    <text class="tab-text">Tokayito</text>
+  </view>
+  
+  <view class="tab-item" onTap="goToTienda">
+    <image class="tab-icon" src="/assets/icons/tiendaIcon.png" mode="aspectFit" />
+    <text class="tab-text">Tienda</text>
   </view>
 </view>

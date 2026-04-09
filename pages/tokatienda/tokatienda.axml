@@ -1,16 +1,14 @@
+<view class="custom-header">
+  <text class="header-texto">TOKA TIENDA</text>
+</view>
+
 <view class="page-container" style="background: linear-gradient(180deg, {{PALETTE.skyBlue}} 0%, {{PALETTE.lightGreen}} 100%)">
   
   <!-- HEADER -->
   <view class="header">
-    <view class="header-center">
-      <text class="store-title" style="color: {{PALETTE.tealDark}};">Tokatienda</text>
-    </view>
-    <view class="points-bubble animate-fade-in" style="background-color: {{PALETTE.softYellow}}; border-color: {{PALETTE.tealDark}};" onTap="togglePointsStore">
+    <view class="points-bubble animate-fade-in" style="background-color: {{PALETTE.softYellow}}; border-color: {{PALETTE.tealDark}};">
       <text class="points-icon">💰</text>
       <text class="points-count" style="color: {{PALETTE.tealDark}};">{{userPoints}}</text>
-      <view class="add-points-btn" style="background-color: {{PALETTE.tealDark}};">
-        <text>+</text>
-      </view>
     </view>
   </view>
 
@@ -20,13 +18,13 @@
     <view class="preview-section">
       <view class="island-base animate-float" style="border-color: {{PALETTE.tealLight}};">
         <view class="avatar-container">
-          <text class="avatar-mascot">🐢</text>
+          <text class="avatar-mascot">🌱</text>
           <!-- Dynamic Overlay Items -->
           <text a:if="{{selectedHat}}" class="overlay-hat animate-pop-in">{{selectedHat}}</text>
           <text a:if="{{selectedAcc}}" class="overlay-acc animate-pop-in">{{selectedAcc}}</text>
         </view>
       </view>
-      <text class="preview-hint" style="color: {{PALETTE.grassGreen}};">Probador Virtual (Previsualización)</text>
+      <text class="preview-hint" style="color: {{PALETTE.grassGreen}};">Probador Virtual</text>
     </view>
 
     <!-- CATEGORY TABS -->
@@ -71,7 +69,7 @@
           <text class="item-name" style="color: {{PALETTE.tealDark}};">{{item.name}}</text>
           <text class="item-meta">{{item.stats || item.desc || 'Accesorio'}}</text>
         </view>
- 
+
         <view class="item-footer">
           <view a:if="{{inventory.indexOf(item.id) !== -1}}" class="owned-badge" style="background-color: {{PALETTE.tealLight}};">
             <text style="color: {{PALETTE.tealDark}};">✓ Propio</text>
@@ -86,57 +84,47 @@
     <view class="bottom-padding"></view>
   </scroll-view>
 
-  <!-- CONFIRM MODAL (DUAL PAYMENT) -->
+  <!-- CONFIRM MODAL -->
   <view a:if="{{showConfirmModal}}" class="modal-overlay animate-fade-in">
     <view class="modal-content animate-pop-in" style="background-color: #FFF; border-color: {{PALETTE.tealLight}};">
-      <text class="modal-title" style="color: {{PALETTE.tealDark}};">Opciones de Pago</text>
+      <text class="modal-title" style="color: {{PALETTE.tealDark}};">¿Confirmar Compra?</text>
       <view class="modal-item-preview">
         <text class="modal-emoji">{{pendingItem.emoji}}</text>
         <text class="modal-name">{{pendingItem.name}}</text>
       </view>
+      <text class="modal-price" style="color: {{PALETTE.pink}};">Total: {{pendingItem.price}} pts</text>
       
-      <view class="modal-payment-options">
-        <view class="pay-option points" style="border-color: {{PALETTE.tealLight}};" onTap="buyWithPoints">
-          <text class="pay-label">Con Puntos</text>
-          <text class="pay-price">{{pendingItem.price}} pts</text>
-        </view>
-        
-        <view a:if="{{currentCategory !== 'premios'}}" class="pay-option cash" style="border-color: {{PALETTE.pink}};" onTap="buyWithCash">
-          <text class="pay-label">Dinero Real</text>
-          <text class="pay-price">${{pendingItem.cashPrice}}</text>
-        </view>
-      </view>
-
-      <view class="btn-close-modal" onTap="cancelPurchase">
-        <text>Tal vez luego</text>
+      <view class="modal-actions">
+        <view class="btn-cancel" onTap="cancelPurchase">Cancelar</view>
+        <view class="btn-confirm" style="background-color: {{PALETTE.tealDark}};" onTap="confirmPurchase">Comprar</view>
       </view>
     </view>
   </view>
 
-  <!-- POINTS STORE (MINI STORE) -->
-  <view a:if="{{showPointsStore}}" class="points-store-overlay animate-fade-in">
-    <view class="store-backdrop" onTap="togglePointsStore"></view>
-    <view class="store-drawer animate-slide-up">
-      <view class="store-header">
-        <text class="store-drawer-title">Mercado de Puntos</text>
-        <view class="close-store" onTap="togglePointsStore">×</view>
-      </view>
-      
-      <scroll-view scroll-y class="packs-list">
-        <view a:for="{{pointsPacks}}" class="pack-card" style="background-color: {{PALETTE.lightGreen}};" onTap="buyPointsPackage" data-pack="{{item}}">
-          <view class="pack-icon">{{item.icon}}</view>
-          <view class="pack-info">
-            <text class="pack-name">{{item.name}}</text>
-            <text class="pack-amount">{{item.points}} pts</text>
-            <text a:if="{{item.extra}}" class="pack-extra">{{item.extra}} 🔥</text>
-          </view>
-          <view class="pack-price-btn" style="background-color: {{PALETTE.tealDark}};">
-            <text>${{item.price}}</text>
-          </view>
-        </view>
-      </scroll-view>
-      
-      <text class="secure-label">🔐 Pago 100% Seguro</text>
-    </view>
+</view>
+
+<view style="height: 100px; width: 100%;"></view>
+
+<view style="height: 100px; width: 100%;"></view>
+
+<view class="custom-tab-bar">
+  <view class="tab-item" onTap="goToTikitoka">
+    <image class="tab-icon" src="/assets/icons/tikitokaIcon.png" mode="aspectFit" />
+    <text class="tab-text">Tiki Toka</text>
+  </view>
+  
+  <view class="tab-item" onTap="goToTokarena">
+    <image class="tab-icon" src="/assets/icons/TokaArenaIcon.png" mode="aspectFit" />
+    <text class="tab-text">Tokarena</text>
+  </view>
+  
+  <view class="tab-item" onTap="goToTokayito">
+    <image class="tab-icon" src="/assets/icons/tokayitoIcon.png" mode="aspectFit" />
+    <text class="tab-text">Tokayito</text>
+  </view>
+  
+  <view class="tab-item" onTap="goToTienda">
+    <image class="tab-icon active" src="/assets/icons/tiendaIcon.png" mode="aspectFit" />
+    <text class="tab-text active">Tienda</text>
   </view>
 </view>

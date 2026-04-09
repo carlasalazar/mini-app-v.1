@@ -34,6 +34,19 @@ Page({
       }))
     });
   },
+  // Lógica de navegación del Custom Tab Bar
+  goToTikitoka() {
+    my.redirectTo({ url: '/pages/tikitoka/tikitoka' });
+  },
+  goToTokarena() {
+    my.redirectTo({ url: '/pages/tokarena/tokarena' });
+  },
+  goToTokayito() {
+    my.redirectTo({ url: '/pages/tokayito/tokayito' });
+  },
+  goToTienda() {
+    my.redirectTo({ url: '/pages/tokatienda/tokatienda' });
+  },
   handleSeleccionarBioma(e) {
     const { id } = e.currentTarget.dataset;
     const biomaActivo = BIOMAS.find(b => b.id === id);

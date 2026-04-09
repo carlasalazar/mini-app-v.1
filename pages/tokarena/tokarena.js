@@ -1,5 +1,3 @@
-const app = getApp();
-
 const ARENA = {
   bgDeep:     "transparent",
   bgCard:     "rgba(255, 255, 255, 0.70)",
@@ -13,137 +11,66 @@ const ARENA = {
   textMuted:  "rgba(11, 110, 86, 0.6)",
 };
 
-const MOCK_USERS = [
-  { id: 101, user: "TokayoGamer", isFriend: true, blocks: [15, 30, 70, 45], protection: 0 },
-  { id: 102, user: "Rex_Antigravity", isFriend: true, blocks: [90, 99], protection: 0 },
-  { id: 103, user: "Lulu_Sky", isFriend: false, blocks: [15, 15, 15], protection: 0 },
-  { id: 104, user: "MetalTok", isFriend: false, blocks: [80, 80, 80, 90], protection: 0 },
+const CATALOGO = [
+  { id: "paja",       nombre: "Bloque de Paja",    defensa: 10,  precio: 50,  color: "#C8A84B", darkColor: "#3D2F0A" },
+  { id: "madera",     nombre: "Bloque de Madera",  defensa: 30,  precio: 150, color: "#8B5A2B", darkColor: "#2A1A0A" },
+  { id: "piedra",     nombre: "Bloque de Piedra",  defensa: 60,  precio: 300, color: "#6B7280", darkColor: "#1F2937" },
+  { id: "bloquesote", nombre: "El Bloquesote",     defensa: 100, precio: 800, color: "#7C3AED", darkColor: "#1E0A40" },
 ];
 
 Page({
   data: {
-    view: 'base', // 'base', 'explorar', 'atacar', 'escape'
-    showInventory: false,
+    view: 'base', // 'base', 'catalogo', 'social', 'escape'
     baseHealth: 50,
     maxHealth: 200,
     ARENA,
-    inventory: [],
-    stats: {},
+    CATALOGO,
     healthPct: 25,
-    healthColor: '#EF4444',
-    protectionLevel: 0,
-    mockUsers: [],
-    searchQuery: '',
-    rival: null, // User currently being attacked
-    isAttacking: false
+    healthColor: '#EF4444' 
   },
-  onShow() {
-    this.refreshData();
+  onLoad() {
+    this.updateHealthUI();
   },
-  refreshData() {
-    const inventory = app.globalData.inventory;
-    const stats = app.globalData.stats;
-    
-    // Calculate own protection level
-    const protectionLevel = inventory.reduce((acc, item) => acc + (item.dureza * (item.qty > 0 ? 1 : 0)), 0);
-    
-    // Calculate mock users protection
-    const mockUsers = MOCK_USERS.map(u => ({
-      ...u,
-      protection: u.blocks.reduce((a, b) => a + b, 0)
-    }));
-
-    this.setData({ 
-      inventory, 
-      stats, 
-      protectionLevel, 
-      mockUsers,
-      baseHealth: app.globalData.stats.fuerza * 2 // Example mapping
-    }, () => this.updateHealthUI());
+  // Lógica de navegación del Custom Tab Bar
+  goToTikitoka() {
+    my.redirectTo({ url: '/pages/tikitoka/tikitoka' });
+  },
+  goToTokarena() {
+    my.redirectTo({ url: '/pages/tokarena/tokarena' });
+  },
+  goToTokayito() {
+    my.redirectTo({ url: '/pages/tokayito/tokayito' });
+  },
+  goToTienda() {
+    my.redirectTo({ url: '/pages/tokatienda/tokatienda' });
   },
   updateHealthUI() {
     const { baseHealth, maxHealth } = this.data;
-    const healthPct = Math.min((baseHealth / maxHealth) * 100, 100);
+    const healthPct = (baseHealth / maxHealth) * 100;
     let healthColor = ARENA.success;
     if (healthPct <= 20) healthColor = ARENA.danger;
     else if (healthPct <= 50) healthColor = "#FFC107";
     
     this.setData({ healthPct, healthColor });
   },
-  toggleInventory() {
-    const isShowing = !this.data.showInventory;
-    this.setData({ showInventory: isShowing });
-    if (isShowing) my.hideTabBar();
-    else if (this.data.view === 'base') my.showTabBar();
-  },
-  toggleExplorar() {
-    if (this.data.view === 'explorar') {
-      this.setData({ view: 'base' });
-      my.showTabBar();
+  simularAtaque() {
+    let next = this.data.baseHealth - 25;
+    if (next <= 0) {
+      this.setData({ baseHealth: 0, view: 'escape' }, () => this.updateHealthUI());
     } else {
-      this.setData({ view: 'explorar' });
-      my.hideTabBar();
+      this.setData({ baseHealth: next }, () => this.updateHealthUI());
     }
   },
-  onSearchInput(e) {
-    this.setData({ searchQuery: e.detail.value });
-  },
-  iniciarAtaque(e) {
-    const { id } = e.currentTarget.dataset;
-    const rival = this.data.mockUsers.find(u => u.id === id);
-    this.setData({ 
-      view: 'atacar', 
-      rival,
-      isAttacking: true 
-    });
-    my.hideTabBar();
-  },
-  atacarCubo() {
-    // Combat Rewards
-    app.updateStat('fuerza', 1);
-    this.refreshData();
-    
-    // Simple visual feedback trigger could go here
-    my.showToast({ content: '+1 Fuerza!', duration: 500 });
-  },
-  donarBloque(e) {
-    const { id } = e.currentTarget.dataset;
-    const rival = this.data.mockUsers.find(u => u.id === id);
-    
-    // Use first available block for mock donation
-    const itemToDonate = this.data.inventory.find(i => i.qty > 0);
-    
-    if (itemToDonate) {
-      if (app.deductInventory(itemToDonate.id, 1)) {
-        app.updateStat('bondad', 5);
-        this.refreshData();
-        my.showToast({ content: `¡Donaste ${itemToDonate.nombre} a ${rival.user}! +5 Bondad`, duration: 2000 });
-      }
-    } else {
-      my.showToast({ content: 'No tienes bloques para donar', type: 'fail' });
-    }
-  },
-  finalizarAtaque() {
-    this.setData({ view: 'base', rival: null, isAttacking: false });
-    my.showTabBar();
-  },
-  seleccionarBloque(e) {
-    const { id } = e.currentTarget.dataset;
-    console.log("Bloque seleccionado:", id);
-    this.toggleInventory();
+  comprarBloque(e) {
+    const { defensa } = e.currentTarget.dataset;
+    const next = Math.min(this.data.baseHealth + defensa, this.data.maxHealth);
+    this.setData({ baseHealth: next, view: 'base' }, () => this.updateHealthUI());
   },
   setView(e) {
     const { view } = e.currentTarget.dataset;
     this.setData({ view });
-    if (view === 'base') my.showTabBar();
-    else my.hideTabBar();
   },
   atraparTokayo() {
-    app.updateStat('fuerza', 10);
-    this.setData({ view: 'base', showInventory: false }, () => {
-      this.refreshData();
-      this.updateHealthUI();
-    });
-    my.showTabBar();
+    this.setData({ baseHealth: 50, view: 'base' }, () => this.updateHealthUI());
   }
 });
