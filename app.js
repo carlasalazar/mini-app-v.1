@@ -1,4 +1,32 @@
 App({
+  getAuthCode(method, scopes) {
+    my.call(`getUser${method}AuthCode`, {
+      usage: 'Se mostrará en el pop-up de autorización del usuario',
+      scopes: scopes,
+      success: res => {
+        console.log('SUCCESS:', res);
+      },
+      fail: res => {
+        console.log('FAIL:', res);
+      }
+    });
+  },
+
+  getDigitalIdentityAuthCode() {
+    this.getAuthCode('DigitalIdentity', ['USER_ID', 'USER_AVATAR', 'USER_NICKNAME']);
+  },
+
+  getPersonalInformationAuthCode() {
+    this.getAuthCode('PersonalInformation', [
+      'USER_NAME',
+      'USER_FIRST_SURNAME',
+      'USER_SECOND_SURNAME',
+      'USER_GENDER',
+      'USER_BIRTHDAY',
+      'USER_STATE_OF_BIRTH',
+      'USER_NATIONALITY',
+    ]);
+  },
   globalData: {
     userInfo: null,
     navigationHistory: [],
@@ -24,6 +52,7 @@ App({
     }
   },
   onLaunch(options) {
+    this.getDigitalIdentityAuthCode();
     console.log('App Launch', options);
   },
   // Global Actions
