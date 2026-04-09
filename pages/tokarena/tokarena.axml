@@ -29,11 +29,110 @@
         <view class="avatar-ring">
           <view class="ring-outer {{healthPct > 30 ? 'vio' : 'danger'}}" style="border-color: {{healthPct > 30 ? ARENA.accentVio : ARENA.danger}};"></view>
           <view class="tokayito-box" style="background-color: {{ARENA.bgCard}}; border-color: {{ARENA.accentVio}};">
-            <text class="tokayito-emoji">🐢</text>
+            <!-- Base flotante pixelada del fuerte -->
+            <view class="fuerte-contenedor">
+
+              <!-- Superficie superior de la isla (el pasto) -->
+              <view class="isla-superficie">
+                <!-- Píxeles decorativos del borde superior -->
+                <view class="pixel-deco pixel-deco-1"></view>
+                <view class="pixel-deco pixel-deco-2"></view>
+                <view class="pixel-deco pixel-deco-3"></view>
+                <view class="pixel-deco pixel-deco-4"></view>
+                <!-- Área donde irán Tokayito y los bloques -->
+                <view class="isla-plataforma">
+                  <!-- Bloques lado izquierdo -->
+                  <view class="bloques-columna bloques-izquierda">
+                    <view
+                      a:for="{{bloquesIzquierda}}"
+                      a:key="id"
+                      class="bloque-wrapper"
+                    >
+                      <image
+                        class="bloque-img"
+                        src="{{rutaBloqueNube}}"
+                        mode="aspectFit"
+                      />
+                    </view>
+                  </view>
+
+                  <!-- Tokayito centrado -->
+                  <view class="tokayito-wrapper">
+                    <image
+                      class="tokayito-img"
+                      src="{{rutaTokayito}}"
+                      mode="aspectFit"
+                    />
+                  </view>
+
+                  <!-- Bloques lado derecho -->
+                  <view class="bloques-columna bloques-derecha">
+                    <view
+                      a:for="{{bloquesDerecha}}"
+                      a:key="id"
+                      class="bloque-wrapper"
+                    >
+                      <image
+                        class="bloque-img"
+                        src="{{rutaBloqueMadera}}"
+                        mode="aspectFit"
+                      />
+                    </view>
+                  </view>
+                </view>
+              </view>
+
+              <!-- Cuerpo de tierra que cuelga hacia abajo -->
+              <view class="isla-tierra">
+                <view class="tierra-capa-1"></view>
+                <view class="tierra-capa-2"></view>
+                <!-- Picos de tierra colgando -->
+                <view class="tierra-picos">
+                  <view class="pico pico-1"></view>
+                  <view class="pico pico-2"></view>
+                  <view class="pico pico-3"></view>
+                  <view class="pico pico-4"></view>
+                  <view class="pico pico-5"></view>
+                </view>
+              </view>
+
+              <!-- Sombra proyectada debajo de la isla -->
+              <view class="isla-sombra"></view>
+
+            </view>
           </view>
         </view>
 
-        <text class="status-msg" style="color: {{ARENA.textMuted}};">Tu fortaleza está aguantando.</text>
+        <!-- Grid de jugadores -->
+        <view class="grid-jugadores">
+          <view
+            a:for="{{mockUsers}}"
+            a:key="id"
+            class="grid-item"
+          >
+            <!-- Base flotante pixelada del jugador -->
+            <view class="isla-mini">
+              <!-- Superficie de la isla -->
+              <view class="isla-mini-superficie">
+                <view class="isla-mini-plataforma"></view>
+              </view>
+              <!-- Tierra colgando -->
+              <view class="isla-mini-tierra">
+                <view class="tierra-mini-capa-1"></view>
+                <view class="tierra-mini-capa-2"></view>
+                <view class="tierra-mini-picos">
+                  <view class="pico-mini pico-mini-1"></view>
+                  <view class="pico-mini pico-mini-2"></view>
+                  <view class="pico-mini pico-mini-3"></view>
+                </view>
+              </view>
+              <!-- Sombra -->
+              <view class="isla-mini-sombra"></view>
+            </view>
+            <!-- Nombre del jugador -->
+            <text class="grid-jugador-nombre">{{item.user}}</text>
+          </view>
+        </view>
       </view>
 
       <!-- Action Buttons -->

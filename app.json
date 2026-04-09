@@ -4,7 +4,9 @@
     "pages/tikitoka/tikitoka",
     "pages/tokarena/tokarena",
     "pages/tokayito/tokayito",
-    "pages/tokatienda/tokatienda"
+    "pages/tokatienda/tokatienda",
+    "pages/juego/juego",
+    "pages/resultado/resultado"
   ],
   "window": {
     "defaultTitle": "TokaYa!",

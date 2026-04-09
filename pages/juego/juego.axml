@@ -1,0 +1,43 @@
+<view class="contenedor" style="{{estiloFondo}}">
+
+  <!-- HUD superior -->
+  <view class="hud">
+    <view class="hud-bloque">
+      <text class="hud-label">Puntos</text>
+      <text class="hud-valor">{{puntos}}</text>
+    </view>
+    <view class="hud-bloque">
+      <text class="hud-label">Tiempo</text>
+      <text class="hud-valor">{{tiempoRestante}}s</text>
+    </view>
+  </view>
+
+  <!-- Pantalla de cuenta regresiva -->
+  <view class="overlay-cuenta" a:if="{{mostrandoCuenta}}">
+    <text class="texto-cuenta">{{cuentaRegresiva}}</text>
+  </view>
+
+  <!-- Área del juego (solo visible cuando el juego está activo) -->
+  <view
+    class="area-juego"
+    a:if="{{!mostrandoCuenta}}"
+    onTouchMove="moverCanasta"
+  >
+    <!-- Objetos cayendo -->
+    <view
+      a:for="{{objetos}}"
+      a:key="id"
+      class="objeto objeto-{{item.tipo}}"
+      style="left: {{item.x}}rpx; top: {{item.y}}rpx;"
+    >
+    </view>
+
+    <!-- Canasta del jugador -->
+    <view
+      class="canasta"
+      style="left: {{canastaX}}rpx;"
+    >
+    </view>
+  </view>
+
+</view>

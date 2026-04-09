@@ -1,0 +1,98 @@
+.contenedor {
+  width: 750rpx;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.hud {
+  width: 750rpx;
+  height: 100rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40rpx;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.hud-bloque {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hud-label {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.hud-valor {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.area-juego {
+  flex: 1;
+  width: 750rpx;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay-cuenta {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 750rpx;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+.texto-cuenta {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 200rpx;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.texto-carga {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 32rpx;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.objeto {
+  position: absolute;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+}
+
+.objeto-normal {
+  background-color: #4CAF50;
+}
+
+.objeto-especial {
+  background-color: #FFD700;
+}
+
+.objeto-trampa {
+  background-color: #EF4444;
+}
+
+.canasta {
+  position: absolute;
+  bottom: 40rpx;
+  width: 120rpx;
+  height: 60rpx;
+  background-color: #00BCD4;
+  border-radius: 16rpx;
+}

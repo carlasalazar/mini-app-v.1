@@ -34,8 +34,10 @@
         >
           <view class="hex-shape" style="background: linear-gradient(135deg, {{item.color}}88 0%, {{item.color}} 100%);">
             <view class="hex-inner">
-              <text class="hex-emoji">{{item.emoji}}</text>
-              <text class="hex-label">{{item.nombre}}</text>
+              <image a:if="{{item.id === 'centro'}}" class="hex-emoji" mode="aspectFit" src="../../assets/icons/bosque-bioma.png" />
+              <image a:elif="{{item.id === 'sur'}}" class="hex-emoji" mode="aspectFit" src="../../assets/icons/playa-bioma.png" />
+              <image a:elif="{{item.id === 'norte'}}" class="hex-emoji" mode="aspectFit" src="../../assets/icons/nieve-bioma.png" />
+
             </view>
           </view>
         </view>
@@ -58,7 +60,7 @@
         <text class="bioma-hint">(Simulador de minijuego en construcción)</text>
       </view>
 
-      <button class="play-btn" style="background-color: {{biomaActivo.color}}22; border-color: {{biomaActivo.color}}; color: {{biomaActivo.color}};" onTap="setViewMapa">
+      <button class="play-btn" style="background-color: {{biomaActivo.color}}22; border-color: {{biomaActivo.color}}; color: {{biomaActivo.color}};" onTap="irAlJuego">
         Jugar y ganar puntos
       </button>
     </view>

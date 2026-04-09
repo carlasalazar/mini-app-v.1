@@ -1,0 +1,35 @@
+<view class="contenedor">
+
+  <!-- Badge de nuevo récord (solo visible si es nuevo record) -->
+  <view class="badge-record" a:if="{{esNuevoRecord}}">
+    <text class="badge-texto">¡Nuevo récord!</text>
+  </view>
+
+  <!-- Ícono de trofeo -->
+  <view class="trofeo">
+    <text class="trofeo-emoji">🏆</text>
+  </view>
+
+  <!-- Puntos obtenidos -->
+  <view class="bloque-puntos">
+    <text class="label">Puntos obtenidos</text>
+    <text class="valor-puntos">{{puntos}}</text>
+  </view>
+
+  <!-- Récord personal -->
+  <view class="bloque-record">
+    <text class="label">Tu récord</text>
+    <text class="valor-record">{{record}}</text>
+  </view>
+
+  <!-- Botones -->
+  <view class="botones">
+    <button class="btn-primario" onTap="jugarDeNuevo">
+      Jugar de nuevo
+    </button>
+    <button class="btn-secundario" onTap="volverAlMapa">
+      Volver al mapa
+    </button>
+  </view>
+
+</view>

@@ -42,6 +42,16 @@ Page({
       view: 'minijuego'
     });
   },
+  irAlJuego() {
+    const { biomaActivo } = this.data;
+    const colorFondo = biomaActivo ? biomaActivo.bgDark : '#071B45';
+    my.navigateTo({
+      url: `/pages/juego/juego?colorFondo=${encodeURIComponent(colorFondo)}`,
+      fail(err) {
+        console.error('Error al navegar al juego:', err);
+      }
+    });
+  },
   setViewMapa() {
     this.setData({
       view: 'mapa'

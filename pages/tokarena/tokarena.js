@@ -35,7 +35,20 @@ Page({
     mockUsers: [],
     searchQuery: '',
     rival: null, // User currently being attacked
-    isAttacking: false
+    isAttacking: false,
+    rutaTokayito: '/assets/icons/tokayito-icon.png',
+    rutaBloqueNube: '/assets/icons/bloque - nube.png',
+    rutaBloqueMadera: '/assets/icons/bloque - madera.png',
+    bloquesIzquierda: [
+      { id: 1, nivel: 1 },
+      { id: 2, nivel: 1 },
+      { id: 3, nivel: 1 },
+    ],
+    bloquesDerecha: [
+      { id: 4, nivel: 1 },
+      { id: 5, nivel: 1 },
+      { id: 6, nivel: 1 },
+    ],
   },
   onShow() {
     this.refreshData();
