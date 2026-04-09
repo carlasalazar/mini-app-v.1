@@ -1,36 +1,26 @@
 const TRIVIA_QUESTIONS = [
   {
-    pregunta: "¿Qué representa el CAT en un producto financiero?",
-    opciones: ["Costo Anual Total", "Crédito Al Toque", "Cuenta Anual Trendy"],
-    correcta: 0
-  },
-  {
-    pregunta: "¿Cuál es el propósito principal de esta Mini App TokaYa!?",
-    opciones: ["Gestionar tarjetas bancarias", "Brindar entretenimiento y dinámicas", "Pagar servicios públicos"],
+    pregunta: "¿Qué es súper importante para mi futuro financiero? ✨",
+    opciones: ["Gastar todo en gloss 💄", "Ahorrar para imprevistos 💖", "Pedirle prestado a mi bff 👯‍♀️"],
     correcta: 1
   },
   {
-    pregunta: "¿Qué sector lidera Toka en México?",
-    opciones: ["Venta de smartphones", "Redes sociales", "Vales de despensa y pagos"],
-    correcta: 2
-  },
-  {
-    pregunta: "Según la regla 50/30/20, ¿cuánto deberías ahorrar?",
-    opciones: ["El 5% de tus ingresos", "El 20% para tu futuro", "Gastar el 100% en lujos"],
-    correcta: 1
-  },
-  {
-    pregunta: "¿Cuál es el beneficio de jugar diariamente en TokaYa!?",
-    opciones: ["Fortalecer stats de tu Tokayito", "Ganar boletos de avión", "Cambiar el color del cielo"],
+    pregunta: "Si uso mi tarjeta, el CAT significa... 🤔",
+    opciones: ["Costo Anual Total ¡Ouch! 💸", "Cute And Trendy 💅", "Comisión Al Toque ⚡️"],
     correcta: 0
+  },
+  {
+    pregunta: "La regla mágica 50/30/20 es para... 📚",
+    opciones: ["Bailar en TikTok 🕺", "Organizar mi dinero 💰", "Comprar boletos de concierto 🎟️"],
+    correcta: 1
   }
 ];
 
 Page({
   data: {
     showTrivia: false,
-    stats: { bondad: 0, inteligencia: 0, fuerza: 0 },
-    perfeccion: 0,
+    stats: { bondad: 70, inteligencia: 45, fuerza: 80 },
+    perfeccion: 65,
     triviaStep: 'start', // 'start', 'playing', 'result'
     currentQIndex: 0,
     score: 0,
@@ -49,16 +39,22 @@ Page({
       glass: "rgba(255, 255, 255, 0.70)",
     }
   },
-  onShow() {
-    this.refreshStats();
-  },
   onLoad() {
+    this.updatePerfeccion();
     this.initSparkles();
   },
-  refreshStats() {
-    const app = getApp();
-    const stats = app.globalData.stats;
-    this.setData({ stats }, () => this.updatePerfeccion());
+  // Lógica de navegación del Custom Tab Bar
+  goToTikitoka() {
+    my.redirectTo({ url: '/pages/tikitoka/tikitoka' });
+  },
+  goToTokarena() {
+    my.redirectTo({ url: '/pages/tokarena/tokarena' });
+  },
+  goToTokayito() {
+    my.redirectTo({ url: '/pages/tokayito/tokayito' });
+  },
+  goToTienda() {
+    my.redirectTo({ url: '/pages/tokatienda/tokatienda' });
   },
   updatePerfeccion() {
     const { stats } = this.data;
@@ -76,19 +72,12 @@ Page({
     this.setData({ sparkles });
   },
   toggleTrivia() {
-    const isShowing = !this.data.showTrivia;
-    this.setData({
-      showTrivia: isShowing,
+    this.setData({ 
+      showTrivia: !this.data.showTrivia,
       triviaStep: 'start',
       currentQIndex: 0,
       score: 0
     });
-    
-    if (isShowing) {
-      my.hideTabBar();
-    } else {
-      my.showTabBar();
-    }
   },
   startTrivia() {
     this.setData({ triviaStep: 'playing' });
@@ -96,17 +85,17 @@ Page({
   handleRespuesta(e) {
     const { idx } = e.currentTarget.dataset;
     let { score, currentQIndex, stats } = this.data;
-
+    
     if (idx === TRIVIA_QUESTIONS[currentQIndex].correcta) {
       score++;
     }
-
+    
     if (currentQIndex < TRIVIA_QUESTIONS.length - 1) {
       this.setData({ score, currentQIndex: currentQIndex + 1 });
     } else {
       const newInt = Math.min(stats.inteligencia + 18, 100);
-      this.setData({
-        score,
+      this.setData({ 
+        score, 
         triviaStep: 'result',
         'stats.inteligencia': newInt
       }, () => this.updatePerfeccion());

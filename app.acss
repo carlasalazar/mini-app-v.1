@@ -53,3 +53,91 @@ view, text {
 .animate-slide-up {
   animation: slideUp 0.4s ease-out forwards;
 }
+
+
+/* ===============================
+   CUSTOM TAB BAR
+   =============================== */
+   .custom-tab-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 90px; /* Aquí controlas el alto total de la barra */
+    background-color: #59A5C6;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 9999;
+    padding-bottom: 15px; /* Espacio extra para los celulares sin botones físicos */
+    box-shadow: 0px -2px 10px rgba(0,0,0,0.1);
+  }
+  
+  .tab-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 25%;
+  }
+
+  
+  .tab-text {
+    font-size: 14px; /* ¡AQUÍ CRECES EL TEXTO! */
+    color: #FFFFFF;
+  }
+  
+  .tab-text.active {
+    color: #0B6E56;
+    font-weight: bold;
+  }
+
+  .tab-icon {
+    width: 38px;
+    height: 38px;
+    margin-bottom: 4px;
+    /* Ahora los inactivos tendrán su color normal */
+    filter: grayscale(0%) opacity(100%); 
+    transition: all 0.3s ease;
+  }
+  
+  /* El ícono seleccionado (activo) se vuelve gris */
+  .tab-icon.active {
+    filter: grayscale(100%) opacity(60%);
+  }
+
+
+
+  /* ===============================
+   CUSTOM HEADER (Títulos)
+   =============================== */
+   .custom-header {
+    width: 100%;
+    height: 60px;
+    background-color: #59A5C6;
+    display: flex;
+    justify-content: flex-start; /* Sigue alineado al inicio */
+    align-items: center;
+    
+    /* Esto lo coloca justo en la mitad de la mitad izquierda (25% del total) */
+    padding-left: 10%; 
+    
+    box-sizing: border-box; /* Vital para que no se desfase el ancho */
+    box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+  }
+
+/* OPCIÓN A: Si vas a usar texto */
+.header-texto {
+  color: #FFFFFF;
+  font-size: 24px;
+  font-weight: bold;
+  /* Aquí puedes intentar poner tu fuente, aunque en Mini Apps suele ser complejo sin una URL externa */
+  font-family: 'Arial', sans-serif; 
+}
+
+/* OPCIÓN B: Si hiciste el título como imagen/logo (Recomendado) */
+.header-imagen {
+  height: 40px;
+  width: 150px;
+}
+
